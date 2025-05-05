@@ -18,6 +18,14 @@ public record Money(decimal Amount)
     {
         return new Money(Amount - subtrahend.Amount);
     }
+    public static Money FromDecimal(decimal amount)
+    {
+        return new Money(amount);
+    }
+    public static Money FromString(string amount)
+    {
+        return new Money(decimal.Parse(amount));
+    }
 }
 
 // public class Money

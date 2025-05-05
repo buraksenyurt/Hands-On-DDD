@@ -1,10 +1,10 @@
 ﻿namespace App.Domain;
 
-public class ClassifiedBook
+public class Book
 {
-    public ClassifiedBookId Id { get; private set; }
+    public BookId Id { get; private set; }
 
-    public ClassifiedBook(ClassifiedBookId id, MemberId ownerId)
+    public Book(BookId id, MemberId ownerId)
     {
         Id = id;
         _ownerId = ownerId;

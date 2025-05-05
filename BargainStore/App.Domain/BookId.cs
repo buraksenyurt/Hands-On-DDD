@@ -1,9 +1,9 @@
 namespace App.Domain;
 
-public record ClassifiedBookId
+public record BookId
 {
     private readonly Guid _value;
-    public ClassifiedBookId(Guid value)
+    public BookId(Guid value)
     {
         if (value == default)
         {

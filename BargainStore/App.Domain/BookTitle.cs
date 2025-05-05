@@ -1,0 +1,23 @@
+namespace App.Domain;
+
+public record BookTitle
+{
+    public string Value { get; }
+    internal BookTitle(string value)
+    {
+        Value = value;
+    }
+    public static BookTitle FromString(string title)
+    {
+        Validate(title);
+        return new BookTitle(title);
+    }
+
+    private static void Validate(string value)
+    {
+        if (value.Length > 100)
+        {
+            throw new ArgumentOutOfRangeException(nameof(value), "Book title can not be longer that 100 characters");
+        }
+    }
+}
