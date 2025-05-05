@@ -1,6 +1,6 @@
 namespace App.Domain;
 
-public class ClassifiedBookId
+public record ClassifiedBookId
 {
     private readonly Guid _value;
     public ClassifiedBookId(Guid value)

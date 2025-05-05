@@ -1,6 +1,6 @@
 namespace App.Domain;
 
-public class ListPrice
+public record ListPrice
     : Money
 {
     public ListPrice(decimal amount) : base(amount)

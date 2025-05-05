@@ -1,7 +1,7 @@
 namespace App.Domain;
 
 //Value Object
-public class MemberId
+public record MemberId
 {
     private readonly Guid _value;
 
