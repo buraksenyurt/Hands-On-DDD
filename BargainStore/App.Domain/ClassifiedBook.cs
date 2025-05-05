@@ -2,19 +2,12 @@
 
 public class ClassifiedBook
 {
-    public Guid Id { get; private set; }
+    public ClassifiedBookId Id { get; private set; }
 
-    public ClassifiedBook(Guid id, Guid ownerId)
+    public ClassifiedBook(ClassifiedBookId id, MemberId ownerId)
     {
-        if (id == default)
-        {
-            throw new ArgumentException("Identity must be specified", nameof(id));
-        }
-        if (ownerId == default)
-        {
-            throw new ArgumentException("Owner Id must be specified", nameof(ownerId));
-        }
         Id = id;
+        _ownerId = ownerId;
     }
 
     // Behaviors
@@ -22,7 +15,7 @@ public class ClassifiedBook
     public void UpdateDetails(string details) => _details = details;
     public void UpdateListPrice(decimal listPrice) => _listPrice = listPrice;
 
-    private Guid _ownerId;
+    private MemberId _ownerId;
     private string _title;
     private string _details;
     private decimal _listPrice;
