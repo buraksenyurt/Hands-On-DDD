@@ -6,7 +6,7 @@ public record Money
 {
     public decimal Amount { get; }
     public CurrencyCodeInfo CurrencyCodeInfo { get; }
-    private Money(decimal amount, CurrencyCodeInfo currencyCodeInfo)
+    internal Money(decimal amount, CurrencyCodeInfo currencyCodeInfo)
     {
         Amount = amount;
         CurrencyCodeInfo = currencyCodeInfo;

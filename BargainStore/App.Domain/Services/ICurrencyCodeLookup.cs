@@ -10,7 +10,7 @@ public class CurrencyCodeInfo
     public string Code { get; set; }
     public bool InUse { get; set; }
     public short DecimalPlaces { get; set; }
-    public static CurrencyCodeInfo None = new CurrencyCodeInfo
+    public static CurrencyCodeInfo None = new()
     {
         InUse = false
     };
