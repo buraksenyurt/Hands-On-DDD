@@ -6,7 +6,7 @@ public class Book(BookId id, MemberId ownerId)
     : IEntity
 {
     public BookId Id { get; private set; } = id;
-    public MemberId OwnerId { get; }
+    public MemberId OwnerId { get; } = ownerId;
     public BookTitle Title { get; private set; }
     public BookDetails Details { get; private set; }
     public SalesPrice SalesPrice { get; private set; }
@@ -54,7 +54,7 @@ public class Book(BookId id, MemberId ownerId)
         {
             throw new InvalidEntityStateException(this, "Details can not be empty");
         }
-        if (SalesPrice?.Amount == 0)
+        if (SalesPrice == null || SalesPrice.Amount <= 0)
         {
             throw new InvalidEntityStateException(this, "Sales price can not be zero");
         }
