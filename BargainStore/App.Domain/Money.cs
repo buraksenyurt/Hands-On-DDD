@@ -1,22 +1,41 @@
+using App.Domain.Services;
+
 namespace App.Domain;
 
 public record Money
 {
-    private const string DefaultCurrencyCode = "TL";
     public decimal Amount { get; }
-    public string CurrencyCode { get; }
-    protected Money(decimal amount, string currencyCode = "TL")
+    public CurrencyCodeInfo CurrencyCodeInfo { get; }
+    private Money(decimal amount, CurrencyCodeInfo currencyCodeInfo)
     {
         Amount = amount;
-        CurrencyCode = currencyCode;
+        CurrencyCodeInfo = currencyCodeInfo;
     }
-    public static Money FromDecimal(decimal amount, string currencyCode = DefaultCurrencyCode)
+    protected Money(decimal amount, string currencyCode, ICurrencyCodeLookup currencyCodeLookup)
     {
-        return new Money(amount, currencyCode);
+        if (string.IsNullOrEmpty(currencyCode))
+        {
+            throw new ArgumentNullException(nameof(currencyCode), "Currency code must be specified");
+        }
+        var currency = currencyCodeLookup.Find(currencyCode);
+        if (!currency.InUse)
+        {
+            throw new ArgumentException($"{currencyCode} is not in use or valid");
+        }
+        if (decimal.Round(amount, currency.DecimalPlaces) != amount)
+        {
+            throw new ArgumentOutOfRangeException(nameof(amount), $"Amount in {currencyCode} can not have more thane {currency.DecimalPlaces} decimals");
+        }
+        Amount = amount;
+        CurrencyCodeInfo = currency;
     }
-    public static Money FromString(string amount, string currencyCode = DefaultCurrencyCode)
+    public static Money FromDecimal(decimal amount, string currencyCode, ICurrencyCodeLookup currencyCodeLookup)
     {
-        return new Money(decimal.Parse(amount), currencyCode);
+        return new Money(amount, currencyCode, currencyCodeLookup);
+    }
+    public static Money FromString(string amount, string currencyCode, ICurrencyCodeLookup currencyCodeLookup)
+    {
+        return new Money(decimal.Parse(amount), currencyCode, currencyCodeLookup);
     }
     public static Money operator +(Money summand1, Money summand2)
     {
@@ -28,19 +47,19 @@ public record Money
     }
     public Money Add(Money summand)
     {
-        if (CurrencyCode != summand.CurrencyCode)
+        if (CurrencyCodeInfo != summand.CurrencyCodeInfo)
         {
             throw new MismatchedCurrencyCodeException("Can not add amounts with different currencies");
         }
-        return new Money(Amount + summand.Amount);
+        return new Money(Amount + summand.Amount, CurrencyCodeInfo);
     }
     public Money Substract(Money subtrahend)
     {
-        if (CurrencyCode != subtrahend.CurrencyCode)
+        if (CurrencyCodeInfo != subtrahend.CurrencyCodeInfo)
         {
             throw new MismatchedCurrencyCodeException("Can not subtract amounts with different currencies");
         }
-        return new Money(Amount - subtrahend.Amount);
+        return new Money(Amount - subtrahend.Amount, CurrencyCodeInfo);
     }
     public class MismatchedCurrencyCodeException(string message)
         : Exception(message)
