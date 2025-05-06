@@ -13,4 +13,5 @@ public record MemberId
         }
         _value = value;
     }
+    public static implicit operator Guid(MemberId self) => self._value;
 }

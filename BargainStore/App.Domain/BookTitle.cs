@@ -20,4 +20,6 @@ public record BookTitle
             throw new ArgumentOutOfRangeException(nameof(value), "Book title can not be longer that 100 characters");
         }
     }
+
+    public static implicit operator string(BookTitle self) => self.Value;
 }

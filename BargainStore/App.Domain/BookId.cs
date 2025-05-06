@@ -11,4 +11,6 @@ public record BookId
         }
         _value = value;
     }
+    
+    public static implicit operator Guid(BookId self) => self._value;
 }

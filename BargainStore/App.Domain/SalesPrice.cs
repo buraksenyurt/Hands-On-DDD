@@ -23,4 +23,6 @@ public record SalesPrice
     {
         return new SalesPrice(amount, currency, currencyCodeLookup);
     }
+
+    public static implicit operator decimal(SalesPrice self) => self.Amount;
 }
