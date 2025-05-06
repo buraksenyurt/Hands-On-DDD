@@ -1,4 +1,4 @@
-namespace App.Domain.Events;
+namespace App.Domain.BookNotice.Events;
 
 // Domain Event'lerde primitive türler kullanılır zira bunlar sistemler arası kullanılan nesnelerdir.
 // Bu nedenle Value Object kullanılmaz.
@@ -14,10 +14,10 @@ public static class BookEvents
         public Guid Id { get; set; }
         public string Title { get; set; }
     }
-    public class DetailsUpdated
+    public class SummaryUpdated
     {
         public Guid Id { get; set; }
-        public string Details { get; set; }
+        public string Summary { get; set; }
     }
     public class SalesPriceUpdated
     {

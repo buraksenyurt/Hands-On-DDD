@@ -1,5 +1,4 @@
-namespace App.Domain;
-
+namespace App.Domain.BookNotice;
 public record BookTitle
 {
     public string Value { get; }

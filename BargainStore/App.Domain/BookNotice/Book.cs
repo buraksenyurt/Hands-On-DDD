@@ -1,8 +1,8 @@
-﻿using App.Domain.Events;
+﻿using App.Domain.BookNotice.Events;
 using App.Domain.Exceptions;
 using App.Framework;
 
-namespace App.Domain;
+namespace App.Domain.BookNotice;
 
 public class Book
     : Entity
@@ -21,7 +21,7 @@ public class Book
     public BookId Id { get; private set; }
     public MemberId OwnerId { get; }
     public BookTitle Title { get; private set; }
-    public BookDetails Details { get; private set; }
+    public BookSummary Summary { get; private set; }
     public SalesPrice SalesPrice { get; private set; }
     public BookCrateDate CreateDate { get; private set; }
     public MemberId ApprovedBy { get; set; }
@@ -37,13 +37,13 @@ public class Book
             Title = title
         });
     }
-    public void UpdateDetails(BookDetails details)
+    public void UpdateSummary(BookSummary summary)
     {
-        Details = details;
-        Raise(new BookEvents.DetailsUpdated
+        Summary = summary;
+        Raise(new BookEvents.SummaryUpdated
         {
             Id = Id,
-            Details = details
+            Summary = summary
         });
     }
     public void UpdateSalesPrice(SalesPrice salesPrice)
@@ -83,9 +83,9 @@ public class Book
         {
             throw new InvalidEntityStateException(this, "Title can not be empty");
         }
-        if (Details == null)
+        if (Summary == null)
         {
-            throw new InvalidEntityStateException(this, "Details can not be empty");
+            throw new InvalidEntityStateException(this, "Summary can not be empty");
         }
         if (SalesPrice == null || SalesPrice.Amount <= 0)
         {

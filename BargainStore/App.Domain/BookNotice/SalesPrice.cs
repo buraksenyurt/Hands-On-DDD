@@ -1,6 +1,6 @@
 using App.Domain.Services;
 
-namespace App.Domain;
+namespace App.Domain.BookNotice;
 
 public record SalesPrice
     : Money
