@@ -9,28 +9,27 @@ public class Book
 {
     public Book(BookId id, MemberId memberId)
     {
-        Id = id;
-        OwnerId = memberId;
-
         Raise(new BookEvents.Created
         {
             Id = id,
-            OwnerId = memberId
+            OwnerId = memberId,
+            CreateDate = DateTime.UtcNow
         });
     }
     public BookId Id { get; private set; }
-    public MemberId OwnerId { get; }
+    public MemberId OwnerId { get; private set; }
     public BookTitle Title { get; private set; }
     public BookSummary Summary { get; private set; }
     public SalesPrice SalesPrice { get; private set; }
-    public BookCrateDate CreateDate { get; private set; }
-    public MemberId ApprovedBy { get; set; }
+    public Date CreateDate { get; private set; }
+    public Date SentDate { get; private set; }
+    public Date ActivateDate { get; private set; }
+    public MemberId ApprovedBy { get; private set; }
     public BookSalesState SalesState { get; private set; } = BookSalesState.Inactive;
 
     // Behaviors
     public void SetTitle(BookTitle title)
     {
-        Title = title;
         Raise(new BookEvents.TitleChanged
         {
             Id = Id,
@@ -39,7 +38,6 @@ public class Book
     }
     public void UpdateSummary(BookSummary summary)
     {
-        Summary = summary;
         Raise(new BookEvents.SummaryUpdated
         {
             Id = Id,
@@ -48,7 +46,6 @@ public class Book
     }
     public void UpdateSalesPrice(SalesPrice salesPrice)
     {
-        SalesPrice = salesPrice;
         Raise(new BookEvents.SalesPriceUpdated
         {
             Id = Id,
@@ -60,36 +57,63 @@ public class Book
 
     public void RequestToPublish()
     {
-        CreateDate = new BookCrateDate(DateTime.Now);
-        SalesState = BookSalesState.PendingReview;
-        Validate();
         Raise(new BookEvents.SentForReview
         {
-            Id = Id
+            Id = Id,
+            SentDate = DateTime.UtcNow
         });
     }
 
-    protected void Validate()
+    protected override void When(object @event)
     {
-        if (Id == null)
+        switch (@event)
         {
-            throw new InvalidEntityStateException(this, "Id can not bu null");
+            case BookEvents.Created e:
+                Id = new BookId(e.Id);
+                OwnerId = new MemberId(e.OwnerId);
+                CreateDate = new Date(e.CreateDate);
+                SalesState = BookSalesState.Inactive;
+                break;
+            case BookEvents.TitleChanged e:
+                Title = new BookTitle(e.Title);
+                break;
+            case BookEvents.SummaryUpdated e:
+                Summary = new BookSummary(e.Summary);
+                break;
+            case BookEvents.SalesPriceUpdated e:
+                SalesPrice = new SalesPrice(e.SalesPrice, e.CurrencyCode);
+                break;
+            case BookEvents.SentForReview e:
+                SalesState = BookSalesState.PendingReview;
+                SentDate = new Date(e.SentDate);
+                break;
         }
-        if (OwnerId == null)
+    }
+
+    protected override void ValidateSate()
+    {
+        var is_valid =
+                Id != null &&
+                OwnerId != null &&
+                (SalesState switch
+                {
+                    BookSalesState.PendingReview =>
+                        Title != null
+                        && Summary != null
+                        && SalesPrice?.Amount > 0
+                        && SentDate.Value != default,
+                    BookSalesState.Active =>
+                        Title != null
+                        && Summary != null
+                        && SalesPrice?.Amount > 0
+                        && ApprovedBy != null
+                        && ActivateDate.Value != default,
+                    _ => true
+                });
+
+        if (!is_valid)
         {
-            throw new InvalidEntityStateException(this, "Owner Id can not bu null");
-        }
-        if (Title == null)
-        {
-            throw new InvalidEntityStateException(this, "Title can not be empty");
-        }
-        if (Summary == null)
-        {
-            throw new InvalidEntityStateException(this, "Summary can not be empty");
-        }
-        if (SalesPrice == null || SalesPrice.Amount <= 0)
-        {
-            throw new InvalidEntityStateException(this, "Sales price can not be zero");
+            throw new InvalidEntityStateException(this, $"Post-checks failed in state {SalesState}");
         }
     }
 

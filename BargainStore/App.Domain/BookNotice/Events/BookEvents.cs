@@ -8,6 +8,7 @@ public static class BookEvents
     {
         public Guid Id { get; set; }
         public Guid OwnerId { get; set; }
+        public DateTime CreateDate { get; set; }
     }
     public class TitleChanged
     {
@@ -28,5 +29,6 @@ public static class BookEvents
     public class SentForReview
     {
         public Guid Id { get; set; }
+        public DateTime SentDate {get;set;}
     }
 }
