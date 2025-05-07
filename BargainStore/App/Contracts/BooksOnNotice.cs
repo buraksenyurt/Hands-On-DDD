@@ -25,6 +25,7 @@ public static class BooksOnNotice
         public class UpdateSalesPrice
         {
             public Guid Id { get; set; }
+            public string CurrencyCode { get; set; }
             public decimal SalesPrice { get; set; }
         }
         public class RequestToPublish
