@@ -17,7 +17,7 @@ public class BooksOnNoticeCommandsApi(
     {
         _logger.LogInformation("Create book request {Id}, {OwnerId}", request.Id, request.OwnerId);
 
-        _booksOnNoticeApplicationService.Handle(request);
+        await _booksOnNoticeApplicationService.Handle(request);
 
         return Ok(new { Message = "Book created successfully" });
     }

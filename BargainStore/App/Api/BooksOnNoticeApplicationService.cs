@@ -1,8 +1,23 @@
+using App.Framework;
+
 namespace App.Api;
 
-public class BooksOnNoticeApplicationService
+public class BooksOnNoticeApplicationService(ILogger<BooksOnNoticeApplicationService> logger)
+    : IApplicationService
 {
-    public void Handle(Contracts.BooksOnNotice.V1.Create command){
-        
+    private readonly ILogger _logger = logger;
+
+    public Task Handle(object command)
+    {
+        switch (command)
+        {
+            case Contracts.BooksOnNotice.V1.Create create:
+                _logger.LogInformation("Created book with ID: {}", create.Id);
+                break;
+            default:
+                throw new InvalidOperationException($"Command type {command.GetType().FullName} is unknown");
+        }
+
+        return Task.CompletedTask;
     }
 }
