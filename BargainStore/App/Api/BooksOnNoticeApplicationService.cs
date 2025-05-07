@@ -27,6 +27,7 @@ public class BooksOnNoticeApplicationService(
                 {
                     throw new InvalidOperationException($"Book with ID {createCmd.Id} already exists.");
                 }
+                _logger.LogWarning("Creating book with ID {Id}, OwnerId {OwnerId}", createCmd.Id, createCmd.OwnerId);
                 book = new Book(new BookId(createCmd.Id), new MemberId(createCmd.OwnerId));
                 await _bookRepository.SaveAsync(book);
                 break;
