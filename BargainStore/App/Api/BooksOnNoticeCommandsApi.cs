@@ -4,22 +4,21 @@ namespace App.Api;
 
 [ApiController]
 [Route("/api/notice")]
-public class BooksOnNoticeCommandsApi : ControllerBase
+public class BooksOnNoticeCommandsApi(
+    ILogger<BooksOnNoticeCommandsApi> logger,
+    BooksOnNoticeApplicationService booksOnNoticeApplicationService)
+    : ControllerBase
 {
-    private readonly ILogger _logger;
-
-    public BooksOnNoticeCommandsApi(ILogger<BooksOnNoticeCommandsApi> logger)
-    {
-        _logger = logger;
-    }
+    private readonly ILogger _logger = logger;
+    private readonly BooksOnNoticeApplicationService _booksOnNoticeApplicationService = booksOnNoticeApplicationService;
 
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] Contracts.BooksOnNotice.V1.Create request)
     {
         _logger.LogInformation("Create book request {Id}, {OwnerId}", request.Id, request.OwnerId);
 
-        // Handle the request here
+        _booksOnNoticeApplicationService.Handle(request);
 
-        return Ok("Command received");
+        return Ok(new { Message = "Book created successfully" });
     }
 }

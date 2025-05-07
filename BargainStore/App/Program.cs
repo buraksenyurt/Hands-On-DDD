@@ -1,8 +1,11 @@
+using App.Api;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
+builder.Services.AddSingleton(new BooksOnNoticeApplicationService());
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
