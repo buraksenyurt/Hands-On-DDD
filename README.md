@@ -12,6 +12,17 @@ Bu çalışmada Mongodb veritabanı tercih edilmiştir.
 docker compose up -d
 ```
 
+Örnek bir swagger testini takiben MongoDb terminaline bağlanarak verinin oluşup oluşmadığı kontrol edilebilir.
+
+```bash
+docker exec -it mongodb mongosh -u scoth -p tiger1234 --authenticationDatabase admin
+
+use BargainStore
+db.Books.find()
+```
+
+![Mongo Db Runtime](MongoDbRuntime.png)
+
 ## Testler
 
 Api tarafı için örnek curl komutları.
