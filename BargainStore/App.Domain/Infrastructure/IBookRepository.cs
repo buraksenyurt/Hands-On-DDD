@@ -1,6 +1,6 @@
 using App.Domain.BookNotice;
 
-namespace App.Domain.Services;
+namespace App.Domain.Infrastructure;
 
 public interface IBookRepository
 {

@@ -1,5 +1,5 @@
 using App.Api;
-using App.Domain.Services;
+using App.Domain.Infrastructure;
 using App.Providers;
 
 var builder = WebApplication.CreateBuilder(args);

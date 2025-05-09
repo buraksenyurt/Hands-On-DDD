@@ -1,5 +1,5 @@
 using App.Domain;
-using App.Domain.Services;
+using App.Domain.Infrastructure;
 using App.Tests.Mocks;
 
 namespace App.Tests;

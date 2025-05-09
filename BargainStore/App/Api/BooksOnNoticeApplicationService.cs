@@ -1,6 +1,6 @@
 using App.Domain;
 using App.Domain.BookNotice;
-using App.Domain.Services;
+using App.Domain.Infrastructure;
 using App.Framework;
 
 namespace App.Api;

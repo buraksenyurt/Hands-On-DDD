@@ -1,6 +1,6 @@
 using App.Framework;
 
-namespace App.Domain.Services;
+namespace App.Domain.Infrastructure;
 
 public interface ICurrencyCodeLookup
 {

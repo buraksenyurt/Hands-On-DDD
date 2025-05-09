@@ -1,5 +1,5 @@
 using App.Domain.BookNotice;
-using App.Domain.Services;
+using App.Domain.Infrastructure;
 
 namespace App.Providers;
 
