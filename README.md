@@ -4,6 +4,14 @@ C# ile basit bir Domain Driven Design macerası. Senaryoda ikinci el kitaplara a
 
 Referans kaynak olarak Alexey Zimarev'in 2019 yılında Packt yayınlarından çıkan Hands-On Domain Driven Design with .NET Core kitabı baz alınmıştır. C# ve .Net'in güncel bazı özellikleri de işin içerisine katılmaya çalışılmıştır.
 
+## Veritabanı
+
+Bu çalışmada Mongodb veritabanı tercih edilmiştir.
+
+```bash
+docker compose up -d
+```
+
 ## Testler
 
 Api tarafı için örnek curl komutları.

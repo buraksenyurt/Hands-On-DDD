@@ -1,0 +1,19 @@
+services:
+    mongo:
+        image: mongo:latest
+        container_name: mongodb
+        restart: always
+        ports:
+            - "27017:27017"
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: scoth
+            MONGO_INITDB_ROOT_PASSWORD: tiger1234
+        volumes:
+            - mongo-data:/data/db
+            - mongo-config:/data/configdb
+
+volumes:
+    mongo-data:
+        driver: local
+    mongo-config:
+        driver: local
