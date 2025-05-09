@@ -17,6 +17,7 @@ public record BookId : ValueObject<BookId>
     public static implicit operator Guid(BookId self) => self._value;
     public override string ToString() => _value.ToString();
     public static implicit operator BookId(Guid value) => new(value);
+    public static implicit operator BookId(string value) => new(Guid.Parse(value));
     protected override IEnumerable<object?> GetEqualityComponents()
     {
         yield return _value;

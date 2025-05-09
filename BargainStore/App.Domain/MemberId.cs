@@ -13,4 +13,7 @@ public class MemberId
         _value = value;
     }
     public static implicit operator Guid(MemberId self) => self._value;
+    public override string ToString() => _value.ToString();
+    public static implicit operator MemberId(Guid value) => new(value);
+    public static implicit operator MemberId(string value) => new(Guid.Parse(value));
 }

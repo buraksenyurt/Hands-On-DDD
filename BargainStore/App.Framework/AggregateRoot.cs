@@ -1,4 +1,4 @@
-namespace App.Framework;
+﻿namespace App.Framework;
 
 public abstract class AggregateRoot<TId>
     : IDomainEventHandler
@@ -10,7 +10,8 @@ public abstract class AggregateRoot<TId>
     protected abstract void When(object @event);
     protected abstract void ValidateSate();
 
-    protected void Raise(object @event)
+    //todo@buraksenyurt Raise normalde protected. BookMapper kullanbilsin diye public oldu ama doğru değil. Çözüm bulunmalı.
+    public void Raise(object @event)
     {
         When(@event);
         ValidateSate();
