@@ -1,8 +1,9 @@
 using App.Domain.Services;
+using App.Framework;
 
 namespace App.Domain;
 
-public record Money
+public record Money : ValueObject<Money>
 {
     public decimal Amount { get; }
     public CurrencyCodeInfo CurrencyCodeInfo { get; }
@@ -61,6 +62,13 @@ public record Money
         }
         return new Money(Amount - subtrahend.Amount, CurrencyCodeInfo);
     }
+
+    protected override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return Amount;
+        yield return CurrencyCodeInfo;
+    }
+
     public class MismatchedCurrencyCodeException(string message)
         : Exception(message)
     {

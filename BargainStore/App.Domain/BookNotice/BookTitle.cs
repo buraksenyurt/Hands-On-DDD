@@ -1,5 +1,8 @@
+using App.Framework;
+
 namespace App.Domain.BookNotice;
 public record BookTitle
+    : ValueObject<BookTitle>
 {
     public string Value { get; }
     internal BookTitle(string value)
@@ -18,6 +21,11 @@ public record BookTitle
         {
             throw new ArgumentOutOfRangeException(nameof(value), "Book title can not be longer that 100 characters");
         }
+    }
+
+    protected override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return Value;
     }
 
     public static implicit operator string(BookTitle self) => self.Value;

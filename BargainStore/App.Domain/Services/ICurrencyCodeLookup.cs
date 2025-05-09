@@ -1,3 +1,5 @@
+using App.Framework;
+
 namespace App.Domain.Services;
 
 public interface ICurrencyCodeLookup
@@ -5,7 +7,8 @@ public interface ICurrencyCodeLookup
     CurrencyCodeInfo Find(string code);
 }
 
-public class CurrencyCodeInfo
+public record CurrencyCodeInfo
+    : ValueObject<CurrencyCodeInfo>
 {
     public string Code { get; set; }
     public bool InUse { get; set; }
@@ -14,4 +17,11 @@ public class CurrencyCodeInfo
     {
         InUse = false
     };
+
+    protected override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return Code;
+        yield return InUse;
+        yield return DecimalPlaces;
+    }
 }

@@ -1,6 +1,9 @@
+using App.Framework;
+
 namespace App.Domain.BookNotice;
 
 public record BookSummary
+    : ValueObject<BookSummary>
 {
     public string Value { get; }
 
@@ -12,6 +15,11 @@ public record BookSummary
     public static BookSummary FromString(string value)
     {
         return new BookSummary(value);
+    }
+
+    protected override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return Value;
     }
 
     public static implicit operator string(BookSummary summary)
