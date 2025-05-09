@@ -31,4 +31,19 @@ public static class BookEvents
         public Guid Id { get; set; }
         public DateTime SentDate {get;set;}
     }
+    public class CommentAddedToBookNotice
+    {
+        public Guid BookId { get; set; }
+        public Guid CommentId { get; set; }
+        public Guid OwnerId { get; set; }
+        public string Comment { get; set; }
+        public DateTime CreateDate { get; set; }
+    }
+    public class CommentRated
+    {
+        public Guid BookId { get; set; }
+        public Guid CommentId { get; set; }
+        public Guid UserId { get; set; }
+        public int Point { get; set; }
+    }
 }
