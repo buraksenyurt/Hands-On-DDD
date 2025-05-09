@@ -1,26 +1,24 @@
 namespace App.Framework;
 
-public abstract class Entity
+public abstract class Entity<TId> : IDomainEventHandler
+    where TId : ValueObject<TId>
 {
-    private readonly List<object> _events;
+    private readonly Action<object> _applier;
+
+    public TId Id { get; protected set; }
+
+    protected Entity(Action<object> applier) => _applier = applier;
+
     protected abstract void When(object @event);
-    protected abstract void ValidateSate();
-    protected Entity()
-    {
-        _events = [];
-    }
+
     protected void Raise(object @event)
     {
         When(@event);
-        ValidateSate();
-        _events.Add(@event);
+        _applier(@event);
     }
-    public IEnumerable<object> GetChanges()
+
+    void IDomainEventHandler.Handle(object @event)
     {
-        return _events.AsEnumerable();
-    }
-    public void ClearChanges()
-    {
-        _events.Clear();
+        When(@event);
     }
 }

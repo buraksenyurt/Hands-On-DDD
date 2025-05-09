@@ -5,7 +5,7 @@ using App.Framework;
 namespace App.Domain.BookNotice;
 
 public class Book
-    : Entity
+    : AggregateRoot<BookId>
 {
     public Book(BookId id, MemberId memberId)
     {
