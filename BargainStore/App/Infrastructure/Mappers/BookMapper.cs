@@ -1,5 +1,4 @@
-﻿using App.Domain;
-using App.Domain.BookNotice;
+﻿using App.Domain.BookNotice;
 using App.Domain.BookNotice.Events;
 using App.Infrastructure.Documents;
 
@@ -13,15 +12,15 @@ public static class BookMapper
         {
             Id = book.Id.ToString(),
             OwnerId = book.OwnerId.ToString(),
-            Title = book.Title.Value,
-            Summary = book.Summary.Value,
+            Title = book.Title?.Value,
+            Summary = book.Summary?.Value,
             SalesPrice = book.SalesPrice?.Amount ?? 0,
-            CurrencyCode = book.SalesPrice.CurrencyCodeInfo.Code,
+            CurrencyCode = book.SalesPrice?.CurrencyCodeInfo.Code,
             CreateDate = book.CreateDate?.Value ?? DateTime.UtcNow,
-            SentDate = book.SentDate.Value,
-            ActivateDate = book.ActivateDate.Value,
+            SentDate = book.SentDate?.Value,
+            ActivateDate = book.ActivateDate?.Value,
             SalesState = book.SalesState.ToString(),
-            ApprovedBy = book.ApprovedBy.ToString(),
+            ApprovedBy = book.ApprovedBy?.ToString(),
             Comments = [.. book.Comments.Select(c => c.ToString())]
         };
     }
