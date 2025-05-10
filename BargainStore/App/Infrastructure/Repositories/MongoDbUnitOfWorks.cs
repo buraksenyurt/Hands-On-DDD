@@ -3,33 +3,40 @@ using MongoDB.Driver;
 
 namespace App.Infrastructure.Repositories;
 
-public class MongoDbUnitOfWorks
-    : IUnitOfWork
+public class MongoDbUnitOfWorks(IMongoClient client, ILogger<MongoDbUnitOfWorks> logger)
+        : IUnitOfWork
 {
-    private readonly IMongoClient _client;
-    private IClientSessionHandle _session;
-    private readonly ILogger<MongoDbUnitOfWorks> _logger;
+    private readonly IMongoClient _client = client;
+    private IClientSessionHandle? _session;
+    private readonly ILogger<MongoDbUnitOfWorks> _logger = logger;
     private bool _disposed;
 
-    public MongoDbUnitOfWorks(IMongoClient client, ILogger<MongoDbUnitOfWorks> logger)
+    public async Task StartTransactionAsync()
     {
-        _client = client;
-        _session = _client.StartSession();
-        _session.StartTransaction();
-        _logger = logger;
+        if (_session == null)
+        {
+            _logger.LogInformation("Starting a new transaction");
+            _session = await _client.StartSessionAsync();
+            _session.StartTransaction();
+            _logger.LogInformation("Transaction started");
+        }
     }
 
     public async Task CommitAsync()
     {
-        try
+        if (_session != null && !_disposed)
         {
-            await _session.CommitTransactionAsync();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError("Transaction commit failed: {}", ex.Message);
-            await _session.AbortTransactionAsync();
-            throw;
+            try
+            {
+                await _session.CommitTransactionAsync();
+                _logger.LogInformation("Transaction committed successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Transaction commit failed: {}", ex.Message);
+                await _session.AbortTransactionAsync();
+                throw;
+            }
         }
     }
 

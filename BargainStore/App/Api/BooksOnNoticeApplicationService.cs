@@ -20,6 +20,8 @@ public class BooksOnNoticeApplicationService(
     public async Task Handle(object command)
     {
         _logger.LogInformation("Handling command: {}", command.GetType().FullName);
+        await _unitOfWork.StartTransactionAsync();
+
         using (_unitOfWork)
         {
             try

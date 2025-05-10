@@ -11,12 +11,12 @@ namespace App.Infrastructure.Repositories;
 public class BookMongoRepository : IBookRepository
 {
     private readonly IMongoCollection<BookDocument> _books;
-    private readonly ILogger<BookInMemoryRepository> _logger;
+    private readonly ILogger<BookMongoRepository> _logger;
 
     public BookMongoRepository(
         IOptions<MongoDbSettings> settings,
         IMongoClient mongoClient,
-        ILogger<BookInMemoryRepository> logger)
+        ILogger<BookMongoRepository> logger)
     {
         _logger = logger;
         var database = mongoClient.GetDatabase(settings.Value.DatabaseName);
