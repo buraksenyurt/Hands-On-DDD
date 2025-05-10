@@ -157,4 +157,9 @@ public class Book
         MarkAsSold,
         PendingReview
     }
+
+    public void Apply(object @event)
+    {
+        When(@event);
+    }
 }

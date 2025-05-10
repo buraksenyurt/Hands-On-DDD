@@ -27,11 +27,10 @@ public static class BookMapper
 
     public static Book ToDomain(this BookDocument doc)
     {
-        //todo@Buraksenyurt Buraya çözüm bulalım. Aynı event bazlı yöntem Book sınıfı içerisinde zaten var.
         var book = new Book(doc.Id, doc.OwnerId);
         if (!string.IsNullOrEmpty(doc.Title))
         {
-            book.Raise(new BookEvents.TitleChanged
+            book.Apply(new BookEvents.TitleChanged
             {
                 Id = book.Id,
                 Title = doc.Title
@@ -40,7 +39,7 @@ public static class BookMapper
 
         if (!string.IsNullOrEmpty(doc.Summary))
         {
-            book.Raise(new BookEvents.SummaryUpdated
+            book.Apply(new BookEvents.SummaryUpdated
             {
                 Id = book.Id,
                 Summary = doc.Summary
@@ -49,7 +48,7 @@ public static class BookMapper
 
         if (doc.SalesPrice > 0)
         {
-            book.Raise(new BookEvents.SalesPriceUpdated
+            book.Apply(new BookEvents.SalesPriceUpdated
             {
                 Id = book.Id,
                 SalesPrice = doc.SalesPrice,
@@ -59,7 +58,7 @@ public static class BookMapper
 
         if (doc.SentDate.HasValue)
         {
-            book.Raise(new BookEvents.SentForReview
+            book.Apply(new BookEvents.SentForReview
             {
                 Id = book.Id,
                 SentDate = doc.SentDate.Value
@@ -68,7 +67,7 @@ public static class BookMapper
 
         foreach (var comment in doc.Comments)
         {
-            book.Raise(new BookEvents.CommentAddedToBookNotice
+            book.Apply(new BookEvents.CommentAddedToBookNotice
             {
                 BookId = book.Id,
                 CommentId = Guid.NewGuid(),
