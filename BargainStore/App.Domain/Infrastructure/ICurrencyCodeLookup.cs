@@ -8,13 +8,15 @@ public interface ICurrencyCodeLookup
 }
 
 public record CurrencyCodeInfo
-    : ValueObject<CurrencyCodeInfo>
+   : ValueObject<CurrencyCodeInfo>
 {
-    public string Code { get; set; }
+    public required string Code { get; set; }
     public bool InUse { get; set; }
     public short DecimalPlaces { get; set; }
-    public static CurrencyCodeInfo None = new()
+
+    public static readonly CurrencyCodeInfo None = new()
     {
+        Code = string.Empty,
         InUse = false
     };
 

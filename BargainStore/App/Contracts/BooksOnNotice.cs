@@ -14,18 +14,18 @@ public static class BooksOnNotice
         public class SetTitle
         {
             public Guid Id { get; set; }
-            public string Title { get; set; }
+            public required string Title { get; set; }
         }
 
         public class SetSummary
         {
             public Guid Id { get; set; }
-            public string Summary { get; set; }
+            public required string Summary { get; set; }
         }
         public class UpdateSalesPrice
         {
             public Guid Id { get; set; }
-            public string CurrencyCode { get; set; }
+            public required string CurrencyCode { get; set; }
             public decimal SalesPrice { get; set; }
         }
         public class RequestToPublish

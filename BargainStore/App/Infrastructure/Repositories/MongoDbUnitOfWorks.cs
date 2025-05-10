@@ -40,5 +40,7 @@ public class MongoDbUnitOfWorks
             _session?.Dispose();
             _disposed = true;
         }
+
+        GC.SuppressFinalize(this);
     }
 }

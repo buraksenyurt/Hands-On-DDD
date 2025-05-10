@@ -120,6 +120,8 @@ public class Book
                 SalesState = BookSalesState.PendingReview;
                 SentDate = new Date(e.SentDate);
                 break;
+            default:
+                break;
         }
     }
 

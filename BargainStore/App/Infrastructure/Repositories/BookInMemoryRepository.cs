@@ -1,13 +1,13 @@
 using App.Domain.BookNotice;
 using App.Domain.Infrastructure;
 
-namespace App.Infrastructure;
+namespace App.Infrastructure.Repositories;
 
-public class BookRepository(ILogger<BookRepository> logger)
+public class BookInMemoryRepository(ILogger<BookInMemoryRepository> logger)
     : IBookRepository
 {
     private readonly Dictionary<BookId, Book> _books = [];
-    private readonly ILogger<BookRepository> _logger = logger;
+    private readonly ILogger<BookInMemoryRepository> _logger = logger;
 
     public Task<bool> IsExistsAsync(BookId id)
     {

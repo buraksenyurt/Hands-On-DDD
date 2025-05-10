@@ -1,13 +1,11 @@
 namespace App.Framework;
 
-public abstract class Entity<TId> : IDomainEventHandler
+public abstract class Entity<TId>(Action<object> applier) : IDomainEventHandler
     where TId : ValueObject<TId>
 {
-    private readonly Action<object> _applier;
+    private readonly Action<object> _applier = applier;
 
     public TId Id { get; protected set; }
-
-    protected Entity(Action<object> applier) => _applier = applier;
 
     protected abstract void When(object @event);
 

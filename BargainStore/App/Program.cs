@@ -3,6 +3,7 @@ using App.Domain.Infrastructure;
 using App.Framework;
 using App.Infrastructure;
 using App.Infrastructure.Repositories;
+using App.Infrastructure.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 

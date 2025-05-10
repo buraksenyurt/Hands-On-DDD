@@ -2,6 +2,7 @@
 using App.Domain.Infrastructure;
 using App.Infrastructure.Documents;
 using App.Infrastructure.Mappers;
+using App.Infrastructure.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
@@ -10,12 +11,12 @@ namespace App.Infrastructure.Repositories;
 public class BookMongoRepository : IBookRepository
 {
     private readonly IMongoCollection<BookDocument> _books;
-    private readonly ILogger<BookRepository> _logger;
+    private readonly ILogger<BookInMemoryRepository> _logger;
 
     public BookMongoRepository(
         IOptions<MongoDbSettings> settings,
         IMongoClient mongoClient,
-        ILogger<BookRepository> logger)
+        ILogger<BookInMemoryRepository> logger)
     {
         _logger = logger;
         var database = mongoClient.GetDatabase(settings.Value.DatabaseName);
