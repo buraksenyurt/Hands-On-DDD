@@ -1,5 +1,6 @@
 using App.Api;
 using App.Domain.Infrastructure;
+using App.Framework;
 using App.Infrastructure;
 using App.Infrastructure.Repositories;
 using Microsoft.Extensions.Options;
@@ -17,7 +18,7 @@ builder.Services.AddSingleton<IMongoClient>(s =>
     var settings = s.GetRequiredService<IOptions<MongoDbSettings>>().Value;
     return new MongoClient(settings.ConnectionString);
 });
-
+builder.Services.AddSingleton<IUnitOfWork, MongoDbUnitOfWorks>();
 builder.Services.AddSingleton<ICurrencyCodeLookup, CurrencyCodeLookup>();
 // builder.Services.AddSingleton<IBookRepository, BookRepository>();
 builder.Services.AddSingleton<IBookRepository, BookMongoRepository>();

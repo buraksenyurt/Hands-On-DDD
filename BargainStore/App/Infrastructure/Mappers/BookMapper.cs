@@ -13,23 +13,23 @@ public static class BookMapper
         {
             Id = book.Id.ToString(),
             OwnerId = book.OwnerId.ToString(),
-            Title = book.Title?.Value,
-            Summary = book.Summary?.Value,
+            Title = book.Title.Value,
+            Summary = book.Summary.Value,
             SalesPrice = book.SalesPrice?.Amount ?? 0,
-            CurrencyCode = book.SalesPrice?.CurrencyCodeInfo.Code,
+            CurrencyCode = book.SalesPrice.CurrencyCodeInfo.Code,
             CreateDate = book.CreateDate?.Value ?? DateTime.UtcNow,
-            SentDate = book.SentDate?.Value,
-            ActivateDate = book.ActivateDate?.Value,
+            SentDate = book.SentDate.Value,
+            ActivateDate = book.ActivateDate.Value,
             SalesState = book.SalesState.ToString(),
-            ApprovedBy = book.ApprovedBy?.ToString(),
-            Comments = book.Comments.Select(c => c.ToString()).ToList()
+            ApprovedBy = book.ApprovedBy.ToString(),
+            Comments = [.. book.Comments.Select(c => c.ToString())]
         };
     }
 
     public static Book ToDomain(this BookDocument doc)
     {
+        //todo@Buraksenyurt Buraya çözüm bulalım. Aynı event bazlı yöntem Book sınıfı içerisinde zaten var.
         var book = new Book(doc.Id, doc.OwnerId);
-        // Şimdi eventleri replay edelim.
         if (!string.IsNullOrEmpty(doc.Title))
         {
             book.Raise(new BookEvents.TitleChanged
