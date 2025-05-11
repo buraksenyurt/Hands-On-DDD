@@ -10,4 +10,8 @@ public static class DomainExceptions
         : Exception($"Illegal words found in {text}")
     {
     }
+    public class InvalidEmailException(string text)
+        : Exception($"Illegal chars found in email, {text}")
+    {
+    }
 }

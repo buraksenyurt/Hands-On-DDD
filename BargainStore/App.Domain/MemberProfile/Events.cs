@@ -2,17 +2,13 @@
 
 public static class Events
 {
-    public class Subscribed
+    public class Created
     {
         public Guid Id { get; set; }
         public required string FullName { get; set; }
         public required string Email { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-    }
-    public class Unsubscribed
-    {
-        public Guid Id { get; set; }
-        public DateTime UnsubscribeDate { get; set; }
     }
     public class FullNameUpdated
     {
