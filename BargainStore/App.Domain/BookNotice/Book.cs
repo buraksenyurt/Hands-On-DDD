@@ -1,5 +1,4 @@
-﻿using App.Domain.Exceptions;
-using App.Domain.Shared;
+﻿using App.Domain.Shared;
 using App.Framework;
 
 namespace App.Domain.BookNotice;
@@ -148,7 +147,7 @@ public class Book
 
         if (!is_valid)
         {
-            throw new InvalidEntityStateException(this, $"Post-checks failed in state {SalesState}");
+            throw new DomainExceptions.InvalidEntityStateException(this, $"Post-checks failed in state {SalesState}");
         }
     }
 
