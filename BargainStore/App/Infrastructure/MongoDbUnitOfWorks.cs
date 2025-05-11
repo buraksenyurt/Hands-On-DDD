@@ -4,7 +4,7 @@ using MongoDB.Driver;
 namespace App.Infrastructure;
 
 public class MongoDbUnitOfWorks(IMongoClient client, ILogger<MongoDbUnitOfWorks> logger)
-        : IUnitOfWork
+    : IUnitOfWork
 {
     private readonly IMongoClient _client = client;
     private IClientSessionHandle? _session;
