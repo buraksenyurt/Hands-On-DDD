@@ -1,4 +1,4 @@
-using App.Domain.BookNotice.Events;
+using App.Domain.Shared;
 using App.Framework;
 
 namespace App.Domain.BookNotice;
@@ -16,14 +16,14 @@ public class Comment(Action<object> applier)
     {
         switch (@event)
         {
-            case BookEvents.CommentAddedToBookNotice e:
+            case Events.CommentAddedToBookNotice e:
                 ParentId = new BookId(e.BookId);
                 OwnerId = new MemberId(e.OwnerId);
                 Id = new CommentId(e.CommentId);
                 Text = e.Comment;
                 CreateDate = CreateDate.From(e.CreateDate);
                 break;
-            case BookEvents.CommentRated e:
+            case Events.CommentRated e:
                 if (e.Point < 1 || e.Point > 5)
                 {
                     throw new ArgumentOutOfRangeException(nameof(e.Point), "Rating must be between 1 and 5");
@@ -34,7 +34,7 @@ public class Comment(Action<object> applier)
                 }
 
                 Rating = e.Point;
-                Raise(new BookEvents.CommentRated
+                Raise(new Events.CommentRated
                 {
                     BookId = ParentId,
                     CommentId = Id,

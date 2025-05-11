@@ -1,6 +1,6 @@
-using App.Domain;
 using App.Domain.BookNotice;
 using App.Domain.Exceptions;
+using App.Domain.Shared;
 using App.Tests.Mocks;
 
 namespace App.Tests;

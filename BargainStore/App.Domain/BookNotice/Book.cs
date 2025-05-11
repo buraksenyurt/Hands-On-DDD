@@ -1,5 +1,5 @@
-﻿using App.Domain.BookNotice.Events;
-using App.Domain.Exceptions;
+﻿using App.Domain.Exceptions;
+using App.Domain.Shared;
 using App.Framework;
 
 namespace App.Domain.BookNotice;
@@ -9,7 +9,7 @@ public class Book
 {
     public Book(BookId id, MemberId memberId)
     {
-        Raise(new BookEvents.Created
+        Raise(new Events.Created
         {
             Id = id,
             OwnerId = memberId,
@@ -31,7 +31,7 @@ public class Book
     // Behaviors
     public void SetTitle(BookTitle title)
     {
-        Raise(new BookEvents.TitleChanged
+        Raise(new Events.TitleChanged
         {
             Id = Id,
             Title = title
@@ -39,7 +39,7 @@ public class Book
     }
     public void UpdateSummary(BookSummary summary)
     {
-        Raise(new BookEvents.SummaryUpdated
+        Raise(new Events.SummaryUpdated
         {
             Id = Id,
             Summary = summary
@@ -47,7 +47,7 @@ public class Book
     }
     public void UpdateSalesPrice(SalesPrice salesPrice)
     {
-        Raise(new BookEvents.SalesPriceUpdated
+        Raise(new Events.SalesPriceUpdated
         {
             Id = Id,
             SalesPrice = salesPrice,
@@ -58,7 +58,7 @@ public class Book
 
     public void RequestToPublish()
     {
-        Raise(new BookEvents.SentForReview
+        Raise(new Events.SentForReview
         {
             Id = Id,
             SentDate = DateTime.UtcNow
@@ -67,7 +67,7 @@ public class Book
 
     public void AddComment(string comment, MemberId ownerId)
     {
-        Raise(new BookEvents.CommentAddedToBookNotice
+        Raise(new Events.CommentAddedToBookNotice
         {
             BookId = Id,
             CommentId = Guid.NewGuid(),
@@ -79,7 +79,7 @@ public class Book
 
     public void RateComment(CommentId commentId, int point, MemberId ownerId)
     {
-        Raise(new BookEvents.CommentRated
+        Raise(new Events.CommentRated
         {
             BookId = Id,
             CommentId = commentId,
@@ -92,31 +92,31 @@ public class Book
     {
         switch (@event)
         {
-            case BookEvents.Created e:
+            case Events.Created e:
                 Id = new BookId(e.Id);
                 OwnerId = new MemberId(e.OwnerId);
                 CreateDate = new Date(e.CreateDate);
                 SalesState = BookSalesState.Inactive;
                 break;
-            case BookEvents.TitleChanged e:
+            case Events.TitleChanged e:
                 Title = new BookTitle(e.Title);
                 break;
-            case BookEvents.SummaryUpdated e:
+            case Events.SummaryUpdated e:
                 Summary = new BookSummary(e.Summary);
                 break;
-            case BookEvents.SalesPriceUpdated e:
+            case Events.SalesPriceUpdated e:
                 SalesPrice = new SalesPrice(e.SalesPrice, e.CurrencyCode);
                 break;
-            case BookEvents.CommentAddedToBookNotice e:
+            case Events.CommentAddedToBookNotice e:
                 Comment comment = new(Raise);
                 ApplyToEntity(comment, e);
                 break;
-            case BookEvents.CommentRated e:
+            case Events.CommentRated e:
                 var commentId = new CommentId(e.CommentId);
                 var commentToRate = Comments.FirstOrDefault(c => c.Id == commentId) ?? throw new InvalidOperationException("Comment not found");
                 ApplyToEntity(commentToRate, e);
                 break;
-            case BookEvents.SentForReview e:
+            case Events.SentForReview e:
                 SalesState = BookSalesState.PendingReview;
                 SentDate = new Date(e.SentDate);
                 break;

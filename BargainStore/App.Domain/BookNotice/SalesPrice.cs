@@ -1,4 +1,5 @@
 using App.Domain.Infrastructure;
+using App.Domain.Shared;
 
 namespace App.Domain.BookNotice;
 

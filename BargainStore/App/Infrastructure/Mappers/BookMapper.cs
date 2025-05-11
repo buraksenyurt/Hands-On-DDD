@@ -1,5 +1,4 @@
 ﻿using App.Domain.BookNotice;
-using App.Domain.BookNotice.Events;
 using App.Infrastructure.Documents;
 
 namespace App.Infrastructure.Mappers;
@@ -30,7 +29,7 @@ public static class BookMapper
         var book = new Book(doc.Id, doc.OwnerId);
         if (!string.IsNullOrEmpty(doc.Title))
         {
-            book.Apply(new BookEvents.TitleChanged
+            book.Apply(new Events.TitleChanged
             {
                 Id = book.Id,
                 Title = doc.Title
@@ -39,7 +38,7 @@ public static class BookMapper
 
         if (!string.IsNullOrEmpty(doc.Summary))
         {
-            book.Apply(new BookEvents.SummaryUpdated
+            book.Apply(new Events.SummaryUpdated
             {
                 Id = book.Id,
                 Summary = doc.Summary
@@ -48,7 +47,7 @@ public static class BookMapper
 
         if (doc.SalesPrice > 0)
         {
-            book.Apply(new BookEvents.SalesPriceUpdated
+            book.Apply(new Events.SalesPriceUpdated
             {
                 Id = book.Id,
                 SalesPrice = doc.SalesPrice,
@@ -58,7 +57,7 @@ public static class BookMapper
 
         if (doc.SentDate.HasValue)
         {
-            book.Apply(new BookEvents.SentForReview
+            book.Apply(new Events.SentForReview
             {
                 Id = book.Id,
                 SentDate = doc.SentDate.Value
@@ -67,7 +66,7 @@ public static class BookMapper
 
         foreach (var comment in doc.Comments)
         {
-            book.Apply(new BookEvents.CommentAddedToBookNotice
+            book.Apply(new Events.CommentAddedToBookNotice
             {
                 BookId = book.Id,
                 CommentId = Guid.NewGuid(),

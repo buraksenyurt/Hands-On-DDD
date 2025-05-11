@@ -1,3 +1,5 @@
+using App.Domain.Shared;
+
 namespace App.Domain.BookNotice;
 
 public record Date(DateTime Value)
