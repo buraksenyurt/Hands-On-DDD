@@ -1,12 +1,10 @@
 ﻿using App.Domain.BookNotice;
 using App.Domain.Infrastructure;
-using App.Infrastructure.Documents;
-using App.Infrastructure.Mappers;
-using App.Infrastructure.Settings;
+using App.Infrastructure;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
-namespace App.Infrastructure.Repositories;
+namespace App.BookNotice;
 
 public class BookMongoRepository : IBookRepository
 {

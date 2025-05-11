@@ -1,7 +1,6 @@
 ﻿using App.Domain.BookNotice;
-using App.Infrastructure.Documents;
 
-namespace App.Infrastructure.Mappers;
+namespace App.BookNotice;
 
 public static class BookMapper
 {

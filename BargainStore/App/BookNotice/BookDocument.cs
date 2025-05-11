@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
-namespace App.Infrastructure.Documents;
+namespace App.BookNotice;
 
 public class BookDocument
 {

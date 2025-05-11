@@ -1,7 +1,7 @@
 ﻿using App.Framework;
 using MongoDB.Driver;
 
-namespace App.Infrastructure.Repositories;
+namespace App.Infrastructure;
 
 public class MongoDbUnitOfWorks(IMongoClient client, ILogger<MongoDbUnitOfWorks> logger)
         : IUnitOfWork

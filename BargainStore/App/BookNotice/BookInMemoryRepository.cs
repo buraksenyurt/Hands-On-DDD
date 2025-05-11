@@ -1,7 +1,7 @@
 using App.Domain.BookNotice;
 using App.Domain.Infrastructure;
 
-namespace App.Infrastructure.Repositories;
+namespace App.BookNotice;
 
 public class BookInMemoryRepository(ILogger<BookInMemoryRepository> logger)
     : IBookRepository
