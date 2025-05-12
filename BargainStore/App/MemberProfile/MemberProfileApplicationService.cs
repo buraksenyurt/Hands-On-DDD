@@ -8,13 +8,13 @@ namespace App.MemberProfile;
 public class MemberProfileApplicationService(
     ILogger<MemberProfileApplicationService> logger,
     IMemberProfileRepository memberProfileRepository,
-    IUnitOfWork unitOfWork,
+    IPostgresUnitOfWork unitOfWork,
     TextValidator textValidator)
         : IApplicationService
 {
     private readonly ILogger _logger = logger;
     private readonly IMemberProfileRepository _memberProfileRepository = memberProfileRepository;
-    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly IPostgresUnitOfWork _unitOfWork = unitOfWork;
     private readonly TextValidator _textValidator = textValidator;
 
     public async Task Handle(object command)

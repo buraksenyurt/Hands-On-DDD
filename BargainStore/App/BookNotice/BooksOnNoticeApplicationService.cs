@@ -9,13 +9,13 @@ public class BooksOnNoticeApplicationService(
     ILogger<BooksOnNoticeApplicationService> logger,
     IBookRepository bookRepository,
     ICurrencyCodeLookup currencyCodeLookup,
-    IUnitOfWork unitOfWork
+    IMongoDbUnitOfWork unitOfWork
     ) : IApplicationService
 {
     private readonly ILogger _logger = logger;
     private readonly IBookRepository _bookRepository = bookRepository;
     private readonly ICurrencyCodeLookup _currencyCodeLookup = currencyCodeLookup;
-    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly IMongoDbUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task Handle(object command)
     {

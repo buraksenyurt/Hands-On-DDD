@@ -1,10 +1,10 @@
-﻿using App.Framework;
+﻿using App.Domain.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace App.Infrastructure;
 
 public class PostgresUnitOfWork(MembershipDbContext dbContext, ILogger<PostgresUnitOfWork> logger) 
-    : IUnitOfWork, IDisposable
+    : IPostgresUnitOfWork
 {
     private readonly MembershipDbContext _dbContext = dbContext;
     private IDbContextTransaction _transaction;

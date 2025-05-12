@@ -18,16 +18,13 @@ builder.Services.AddSingleton<IMongoClient>(s =>
     var settings = s.GetRequiredService<IOptions<MongoDbSettings>>().Value;
     return new MongoClient(settings.ConnectionString);
 });
-builder.Services.AddSingleton<IUnitOfWork, MongoDbUnitOfWorks>();
+builder.Services.AddSingleton<IMongoDbUnitOfWork, MongoDbUnitOfWorks>();
 
-//todo@buraksenyurt IUnitOfWork'ün doğru versiyon aktarımı için Factory pattern kullanılabilir. Ya da named scope
-
-//builder.Services.AddDbContext<MembershipDbContext>(options =>
-//    options.UseNpgsql(builder.Configuration.GetConnectionString("MembershipDb")));
-//builder.Services.AddScoped<IUnitOfWork, PostgresUnitOfWork>();
+builder.Services.AddDbContext<MembershipDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("MembershipDb")));
+builder.Services.AddScoped<IPostgresUnitOfWork, PostgresUnitOfWork>();
 
 builder.Services.AddSingleton<ICurrencyCodeLookup, CurrencyCodeLookup>();
-// builder.Services.AddSingleton<IBookRepository, BookRepository>();
 builder.Services.AddSingleton<IBookRepository, BookMongoRepository>();
 builder.Services.AddSingleton<BooksOnNoticeApplicationService>();
 builder.Services.AddControllers();

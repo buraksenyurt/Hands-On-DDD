@@ -1,10 +1,10 @@
-﻿using App.Framework;
+﻿using App.Domain.Infrastructure;
 using MongoDB.Driver;
 
 namespace App.Infrastructure;
 
 public class MongoDbUnitOfWorks(IMongoClient client, ILogger<MongoDbUnitOfWorks> logger)
-    : IUnitOfWork
+    : IMongoDbUnitOfWork
 {
     private readonly IMongoClient _client = client;
     private IClientSessionHandle? _session;
