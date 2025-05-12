@@ -38,7 +38,7 @@ builder.Services.AddSingleton<TextValidator>(text =>
             return false;
         }
     }
-    return !string.IsNullOrWhiteSpace(text) && text.Length <= 100;
+    return !string.IsNullOrWhiteSpace(text) && text.Length <= 5;
 });
 
 

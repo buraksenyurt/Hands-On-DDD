@@ -5,6 +5,7 @@ namespace App.Domain.Shared;
 public record MemberId : ValueObject<MemberId>
 {
     private readonly Guid _value;
+    protected MemberId() { }
 
     public MemberId(Guid value)
     {
