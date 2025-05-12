@@ -23,6 +23,21 @@ db.Books.find()
 
 Senaryoyu farklılaştırmak adınma membership management kısmında Postgresql kullanımı tercih edilmiştir. Hem MongoDb hem Postgresql servisleri docker compose aracılığı ile ayağa kaldırılır.
 
+## Postgresql
+
+Member profile tarafı Entity Framework üzerinden postgresql kullanmaktadır. Migration işlemleri için ef aracından yararlanılabilir. Aşağıdaki komutları App klasöründeyken çalıştırmak yeterlidir.
+
+```bash
+# Eğer App projesinde yoksa eklenmeli
+ dotnet add package Microsoft.EntityFrameworkCore.Design
+
+ # Migration planını hazırlamak için
+ dotnet ef migrations add Initial
+
+ # Migration'ı işletmek için
+ dotnet ef database update
+ ```
+
 ## Testler
 
 BookNotice Api tarafı için örnek curl komutları _(Pek tabii proje başlatıldığında açılan Swagger arabirimi üzerinden de ilerlenebilir)_
@@ -91,5 +106,45 @@ curl -X 'PUT' \
   -d '{
   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   "sentDate": "2025-05-10T08:18:04.006Z"
+}'
+```
+
+Yeni bir kullanıcı oluşturma;
+
+```bash
+curl -X 'POST' \
+  'https://localhost:7150/api/membership' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "fullName": "John Doe",
+  "email": "john.doe@bookworms.com"
+}'
+```
+
+İsim güncellemek için;
+
+```bash
+curl -X 'PUT' \
+  'https://localhost:7150/api/membership/full-name' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "fullName": "Can Cey Rambo"
+}'
+```
+
+Email adresi güncellemek için;
+
+```bash
+curl -X 'PUT' \
+  'https://localhost:7150/api/membership/email' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "email": "can.cey@bookworms.com"
 }'
 ```
