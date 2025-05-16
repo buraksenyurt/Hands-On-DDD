@@ -12,8 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-builder.Services.Configure<MongoDbSettings>(
-    builder.Configuration.GetSection(nameof(MongoDbSettings)));
+builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection(nameof(MongoDbSettings)));
 builder.Services.AddScoped<IMongoClient>(s =>
 {
     var settings = s.GetRequiredService<IOptions<MongoDbSettings>>().Value;

@@ -1,9 +1,10 @@
 ﻿using App.Domain.Infrastructure;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace App.Infrastructure;
 
-public class MongoDbUnitOfWorks(IMongoClient client, ILogger<MongoDbUnitOfWorks> logger)
+public class MongoDbUnitOfWorks(IMongoClient client, ILogger<MongoDbUnitOfWorks> logger, IOptions<MongoDbSettings> options)
     : IMongoDbUnitOfWork
 {
     private readonly IMongoClient _client = client;
@@ -13,6 +14,9 @@ public class MongoDbUnitOfWorks(IMongoClient client, ILogger<MongoDbUnitOfWorks>
 
     public async Task StartTransactionAsync()
     {
+        if (!options.Value.UseTransactions)
+            return;
+
         if (_session == null)
         {
             _logger.LogInformation("Starting a new transaction");
@@ -24,6 +28,9 @@ public class MongoDbUnitOfWorks(IMongoClient client, ILogger<MongoDbUnitOfWorks>
 
     public async Task CommitAsync()
     {
+        if (!options.Value.UseTransactions)
+            return;
+
         if (_session != null && !_disposed)
         {
             try
