@@ -33,5 +33,12 @@ public static class Contracts
             public Guid Id { get; set; }
             public DateTime SentDate { get; set; }
         }
+        public class AddComment
+        {
+            public Guid Id { get; set; }
+            public Guid BookId { get; set; }
+            public Guid OwnerId { get; set; }
+            public required string Comment { get; set; }
+        }
     }
 }

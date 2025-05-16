@@ -57,6 +57,12 @@ public class BooksOnNoticeApplicationService(
                             book.UpdateSalesPrice(new SalesPrice(updateSalesPriceCmd.SalesPrice, updateSalesPriceCmd.CurrencyCode, _currencyCodeLookup));
                         });
                         break;
+                    case Contracts.V1.AddComment addCommentCmd:
+                        await HandleUpdate(addCommentCmd.Id, book =>
+                        {
+                            book.AddComment(addCommentCmd.Comment, addCommentCmd.BookId);
+                        });
+                        break;
                     case Contracts.V1.RequestToPublish requestToPublish:
                         await HandleUpdate(requestToPublish.Id, book =>
                         {

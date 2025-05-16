@@ -19,7 +19,14 @@ public static class BookMapper
             ActivateDate = book.ActivateDate?.Value,
             SalesState = book.SalesState.ToString(),
             ApprovedBy = book.ApprovedBy?.ToString(),
-            Comments = [.. book.Comments.Select(c => c.ToString())]
+            Comments = [.. book.Comments.Select(c => new CommentDocument
+            {
+                Id = c.Id,
+                OwnerId = c.OwnerId.ToString(),
+                Text = c.Text,
+                CreateDate = c.CreateDate.Value,
+                Rating = c.Rating
+            })]
         };
     }
 
@@ -63,16 +70,30 @@ public static class BookMapper
             });
         }
 
-        foreach (var comment in doc.Comments)
+        foreach (var commentDoc in doc.Comments)
         {
-            book.Apply(new Events.CommentAddedToBookNotice
+            var e = new Events.CommentAddedToBookNotice
             {
-                BookId = book.Id,
-                CommentId = Guid.NewGuid(),
-                // OwnerId = comment, //todo@buraksenyurt Buraya çözüm bul
-                Comment = comment,
-                CreateDate = DateTime.UtcNow
-            });
+                BookId = Guid.Parse(doc.Id),
+                CommentId = commentDoc.Id,
+                OwnerId = Guid.Parse(doc.OwnerId),
+                Comment = commentDoc.Text,
+                CreateDate = commentDoc.CreateDate
+            };
+
+            book.Apply(e);
+
+            if (commentDoc.Rating > 0)
+            {
+                var rateEvent = new Events.CommentRated
+                {
+                    BookId = Guid.Parse(doc.Id),
+                    CommentId = commentDoc.Id,
+                    UserId = Guid.Parse(doc.OwnerId),
+                    Point = commentDoc.Rating
+                };
+                book.Apply(rateEvent);
+            }
         }
 
         return book;

@@ -19,5 +19,14 @@ public class BookDocument
     public DateTime? ActivateDate { get; set; }
     public string SalesState { get; set; }
     public string ApprovedBy { get; set; }
-    public List<string> Comments { get; set; }
+    public List<CommentDocument> Comments { get; set; } = [];
+}
+
+public class CommentDocument
+{
+    public Guid Id { get; set; }
+    public string OwnerId { get; set; }
+    public string Text { get; set; }
+    public DateTime CreateDate { get; set; }
+    public int Rating { get; set; }
 }

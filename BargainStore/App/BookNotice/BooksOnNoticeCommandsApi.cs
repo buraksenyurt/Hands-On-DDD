@@ -41,6 +41,12 @@ public class BooksOnNoticeCommandsApi(
         _logger.LogInformation("Update sales price request {Id}, {SalesPrice}", request.Id, request.SalesPrice);
         return await RequestHandler.HandleCommand(request, _booksOnNoticeApplicationService.Handle, _logger);
     }
+    [HttpPut("add-comment")]
+    public async Task<IActionResult> AddComment([FromBody] V1.AddComment request)
+    {
+        _logger.LogInformation("Add comment request book id: {Id}", request.Id);
+        return await RequestHandler.HandleCommand(request, _booksOnNoticeApplicationService.Handle, _logger);
+    }
 
     [HttpPut("request-to-publish")]
     public async Task<IActionResult> PutRequestToPublish([FromBody] V1.RequestToPublish request)

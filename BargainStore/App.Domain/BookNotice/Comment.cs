@@ -6,11 +6,11 @@ namespace App.Domain.BookNotice;
 public class Comment(Action<object> applier)
     : Entity<CommentId>(applier)
 {
-    internal BookId ParentId { get; private set; }
-    internal MemberId OwnerId { get; private set; }
-    internal string Text { get; private set; }
-    internal CreateDate CreateDate { get; private set; }
-    internal int Rating { get; private set; }
+    public BookId ParentId { get; private set; }
+    public MemberId OwnerId { get; private set; }
+    public string Text { get; private set; }
+    public CreateDate CreateDate { get; private set; }
+    public int Rating { get; private set; }
 
     protected override void When(object @event)
     {
