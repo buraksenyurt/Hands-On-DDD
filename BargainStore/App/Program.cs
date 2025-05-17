@@ -14,13 +14,13 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection(nameof(MongoDbSettings)));
-builder.Services.AddScoped<IMongoClient>(s =>
+builder.Services.AddSingleton<IMongoClient>(s =>
 {
     var settings = s.GetRequiredService<IOptions<MongoDbSettings>>().Value;
     return new MongoClient(settings.ConnectionString);
 });
 builder.Services.AddScoped<IMongoDbUnitOfWork, MongoDbUnitOfWorks>();
-builder.Services.AddScoped<BookMongoQueryContext>();
+builder.Services.AddSingleton<BookMongoQueryContext>();
 
 builder.Services.AddDbContext<MembershipDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("MembershipDb")));

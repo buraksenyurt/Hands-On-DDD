@@ -4,7 +4,7 @@ public static class QueryModels
 {
     public class GetBookNotice
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
     public class GetBooksOnSales
     {

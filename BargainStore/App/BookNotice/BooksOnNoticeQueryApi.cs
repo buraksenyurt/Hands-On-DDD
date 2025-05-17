@@ -11,14 +11,14 @@ public class BooksOnNoticeQueryApi(ILogger<BooksOnNoticeQueryApi> logger)
     private readonly ILogger<BooksOnNoticeQueryApi> _logger = logger;
 
     [HttpGet]
-    public Task<IActionResult> Get(QueryModels.GetBookNotice request)
+    public Task<IActionResult> Get([FromQuery] QueryModels.GetBookNotice request)
     {
         return RequestHandler.HandleQuery(() => Queries.Query(request), _logger);
     }
 
     [HttpGet]
     [Route("on-sales")]
-    public Task<IActionResult> Get(QueryModels.GetBooksOnSales request)
+    public Task<IActionResult> Get([FromQuery] QueryModels.GetBooksOnSales request)
     {
         return RequestHandler.HandleQuery(() => Queries.Query(request), _logger);
     }
