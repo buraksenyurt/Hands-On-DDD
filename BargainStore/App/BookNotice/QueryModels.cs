@@ -11,4 +11,9 @@ public static class QueryModels
         public int Page { get; set; }
         public int PageSize { get; set; }
     }
+    public class GetPendingReviewsBooks
+    {
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+    }
 }

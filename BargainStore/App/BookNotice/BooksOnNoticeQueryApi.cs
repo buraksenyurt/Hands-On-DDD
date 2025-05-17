@@ -22,4 +22,11 @@ public class BooksOnNoticeQueryApi(ILogger<BooksOnNoticeQueryApi> logger)
     {
         return RequestHandler.HandleQuery(() => Queries.Query(request), _logger);
     }
+
+    [HttpGet]
+    [Route("pending-review")]
+    public Task<IActionResult> Get([FromQuery] QueryModels.GetPendingReviewsBooks request)
+    {
+        return RequestHandler.HandleQuery(() => Queries.Query(request), _logger);
+    }
 }

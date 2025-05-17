@@ -38,18 +38,36 @@ public static class Queries
         };
     }
 
-    public static async Task<List<Book>> Query(GetBooksOnSales query)
+    public static Task<List<Book>> Query(GetBooksOnSales query)
     {
-        var filter = Builders<BookDocument>.Filter.Eq(b => b.SalesState, "Active");
+        return QueryBooksBySalesState(
+            Domain.BookNotice.Book.BookSalesState.Active.ToString(),
+            query.Page,
+            query.PageSize
+        );
+    }
 
-        var skip = (query.Page - 1) * query.PageSize;
+    public static Task<List<Book>> Query(GetPendingReviewsBooks query)
+    {
+        return QueryBooksBySalesState(
+            Domain.BookNotice.Book.BookSalesState.PendingReview.ToString(),
+            query.Page,
+            query.PageSize
+        );
+    }
+
+    private static async Task<List<Book>> QueryBooksBySalesState(string salesState, int page, int pageSize)
+    {
+        var filter = Builders<BookDocument>.Filter.Eq(b => b.SalesState, salesState);
+
+        var skip = (page - 1) * pageSize;
         var docs = await _context.Books
             .Find(filter)
             .Skip(skip)
-            .Limit(query.PageSize)
+            .Limit(pageSize)
             .ToListAsync();
 
-        return docs.Select(doc => new Book
+        return [.. docs.Select(doc => new Book
         {
             BookId = Guid.Parse(doc.Id),
             Title = doc.Title,
@@ -63,7 +81,8 @@ public static class Queries
                 Text = c.Text,
                 Rating = c.Rating
             }).ToList() ?? []
-        }).ToList();
+        })];
     }
+
 }
 
