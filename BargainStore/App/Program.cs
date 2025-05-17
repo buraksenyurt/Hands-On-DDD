@@ -4,6 +4,7 @@ using App.Domain.Shared;
 using App.Infrastructure;
 using App.MemberProfile;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
@@ -19,6 +20,7 @@ builder.Services.AddScoped<IMongoClient>(s =>
     return new MongoClient(settings.ConnectionString);
 });
 builder.Services.AddScoped<IMongoDbUnitOfWork, MongoDbUnitOfWorks>();
+builder.Services.AddScoped<BookMongoQueryContext>();
 
 builder.Services.AddDbContext<MembershipDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("MembershipDb")));
@@ -52,6 +54,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+var booksQueryContext = app.Services.GetRequiredService<BookMongoQueryContext>();
+Queries.Configure(booksQueryContext);
 
 if (app.Environment.IsDevelopment())
 {
