@@ -1,0 +1,376 @@
+{
+	"info": {
+		"_postman_id": "11b2ef49-5267-4eba-a7fc-2c90f8c50872",
+		"name": "Hands on DDD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1401662"
+	},
+	"item": [
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "Create New Book Notice",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n    \"ownerId\": \"9A6CF991-85C8-4976-BA25-35B5A97E5139\",\r\n    \"createdDate\": \"2025-05-17T10:08:21.526Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7150/api/notice",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7150",
+							"path": [
+								"api",
+								"notice"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7150/api/notice?Id=3fa85f64-5717-4562-b3fc-2c963f66afa6",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7150",
+							"path": [
+								"api",
+								"notice"
+							],
+							"query": [
+								{
+									"key": "Id",
+									"value": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Books On Sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7150/api/notice/on-sales?Page=1&PageSize=10",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7150",
+							"path": [
+								"api",
+								"notice",
+								"on-sales"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "PageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Books On Pending Review",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7150/api/notice/pending-review?Page=1&PageSize=10",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7150",
+							"path": [
+								"api",
+								"notice",
+								"pending-review"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "PageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set Book Title",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n    \"title\": \"Compute Magazine 1984 - Issue 3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7150/api/notice/title",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7150",
+							"path": [
+								"api",
+								"notice",
+								"title"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Book Summary",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n    \"summary\": \"Temiz kapay, az yıpranmış sayfalar. 1984 yılında bilgisayar teknolojisindeki gelişmeleri merak edenler için harika bir antika.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7150/api/notice/summary",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7150",
+							"path": [
+								"api",
+								"notice",
+								"summary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Sales Price",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n    \"currencyCode\": \"TL\",\r\n    \"salesPrice\": 750.50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7150/api/notice/sales-price",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7150",
+							"path": [
+								"api",
+								"notice",
+								"sales-price"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Comment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"711CD2D8-42D9-4665-9B10-6479CA29C197\",\r\n    \"bookId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n    \"ownerId\": \"9A6CF991-85C8-4976-BA25-35B5A97E5139\",\r\n    \"comment\": \"Harika. Alışveriş listeme ekliyorum. Fiyatta anlaşma payı var mı?\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7150/api/notice/add-comment",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7150",
+							"path": [
+								"api",
+								"notice",
+								"add-comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request to Publish",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"sentDate\": \"2025-05-17T10:15:49.620Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7150/api/notice/request-to-publish",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7150",
+							"path": [
+								"api",
+								"notice",
+								"request-to-publish"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Membership",
+			"item": [
+				{
+					"name": "Create New Member",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"9A6CF991-85C8-4976-BA25-35B5A97E5139\",\r\n    \"fullName\": \"Can Cey Rambo\",\r\n    \"email\": \"can@cey.rambo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7150/api/membership",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7150",
+							"path": [
+								"api",
+								"membership"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Fullname",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"9A6CF991-85C8-4976-BA25-35B5A97E5139\",\r\n    \"fullName\": \"Jan Cey Rambo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7150/api/membership/full-name",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7150",
+							"path": [
+								"api",
+								"membership",
+								"full-name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Email Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"9A6CF991-85C8-4976-BA25-35B5A97E5139\",\r\n    \"email\": \"coni-coni@azonbargainstore.lib\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7150/api/membership/email",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7150",
+							"path": [
+								"api",
+								"membership",
+								"email"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
