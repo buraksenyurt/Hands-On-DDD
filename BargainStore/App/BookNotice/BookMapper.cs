@@ -21,7 +21,7 @@ public static class BookMapper
             ApprovedBy = book.ApprovedBy?.ToString(),
             Comments = [.. book.Comments.Select(c => new CommentDocument
             {
-                Id = c.Id,
+                Id = c.Id.ToString(),
                 OwnerId = c.OwnerId.ToString(),
                 Text = c.Text,
                 CreateDate = c.CreateDate.Value,
@@ -75,7 +75,7 @@ public static class BookMapper
             var e = new Events.CommentAddedToBookNotice
             {
                 BookId = Guid.Parse(doc.Id),
-                CommentId = commentDoc.Id,
+                CommentId = Guid.Parse(commentDoc.Id),
                 OwnerId = Guid.Parse(doc.OwnerId),
                 Comment = commentDoc.Text,
                 CreateDate = commentDoc.CreateDate
@@ -88,7 +88,7 @@ public static class BookMapper
                 var rateEvent = new Events.CommentRated
                 {
                     BookId = Guid.Parse(doc.Id),
-                    CommentId = commentDoc.Id,
+                    CommentId = Guid.Parse(commentDoc.Id),
                     UserId = Guid.Parse(doc.OwnerId),
                     Point = commentDoc.Rating
                 };

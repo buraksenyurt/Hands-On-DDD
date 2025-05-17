@@ -55,6 +55,7 @@ public record CommentId(Guid Value)
         yield return Value;
     }
 
+    public override string ToString() => Value.ToString();
     public static implicit operator Guid(CommentId id) => id.Value;
     public static implicit operator CommentId(Guid id) => new(id);
 }

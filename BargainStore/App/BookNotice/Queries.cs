@@ -31,7 +31,7 @@ public static class Queries
             SalesState = doc.SalesState,
             Comments = doc.Comments?.Select(c => new Comment
             {
-                CommentId = c.Id,
+                CommentId = Guid.Parse(c.Id),
                 Text = c.Text,
                 Rating = c.Rating
             }).ToList() ?? []
@@ -77,7 +77,7 @@ public static class Queries
             SalesState = doc.SalesState,
             Comments = doc.Comments?.Select(c => new Comment
             {
-                CommentId = c.Id,
+                CommentId = Guid.Parse(c.Id),
                 Text = c.Text,
                 Rating = c.Rating
             }).ToList() ?? []

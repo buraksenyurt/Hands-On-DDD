@@ -109,6 +109,7 @@ public class Book
             case Events.CommentAddedToBookNotice e:
                 Comment comment = new(Raise);
                 ApplyToEntity(comment, e);
+                Comments.Add(comment);
                 break;
             case Events.CommentRated e:
                 var commentId = new CommentId(e.CommentId);

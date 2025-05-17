@@ -58,7 +58,7 @@ public class BooksOnNoticeApplicationService(
                         });
                         break;
                     case Contracts.V1.AddComment addCommentCmd:
-                        await HandleUpdate(addCommentCmd.Id, book =>
+                        await HandleUpdate(addCommentCmd.BookId, book =>
                         {
                             book.AddComment(addCommentCmd.Comment, addCommentCmd.BookId);
                         });

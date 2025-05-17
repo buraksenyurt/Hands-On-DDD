@@ -24,7 +24,9 @@ public class BookDocument
 
 public class CommentDocument
 {
-    public Guid Id { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.String)]
+    public string Id { get; set; }
     public string OwnerId { get; set; }
     public string Text { get; set; }
     public DateTime CreateDate { get; set; }
